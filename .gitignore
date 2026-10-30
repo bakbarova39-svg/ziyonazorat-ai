@@ -1,0 +1,15 @@
+# Vercel
+.vercel
+
+# Muhit o'zgaruvchilari
+.env
+.env*.local
+
+# Operatsion tizim fayllari
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Loglar
+*.log
+

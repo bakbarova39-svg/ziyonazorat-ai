@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZiyoNazorat AI — AI Asoslari va Prompt Engineering Platformasi</title>
+  <meta name="description" content="Sun'iy intellekt asoslari va prompt engineering bo'yicha o'quv guruhlarini nazorat qilish, har bir amaliy ko'rsatmani alohida tekshirish va ustozga tushunarli hisobot berish platformasi.">
+  <meta name="keywords" content="AI asoslari, prompt engineering, guruhlar, promptlar, sun'iy intellekt, ustoz hisoboti, ta'lim">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%234f46e5%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polygon points=%2212 2 2 7 12 12 22 7 12 2%22/><polyline points=%222 17 12 22 22 17%22/><polyline points=%222 12 12 17 22 12%22/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       APP HEADER
+       ========================================================================== -->
+  <header class="app-header">
+    <div class="header-container">
+      <!-- Logo & Platform Name -->
+      <div class="brand-wrapper" onclick="App.switchTab('assignments')">
+        <div class="brand-logo-icon">
+          <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>ZiyoNazorat AI</h1>
+          <span>AI Asoslari & Prompt Engineering</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs -->
+      <nav class="main-nav">
+        <button class="nav-link active" data-tab="assignments" id="navAssignments" onclick="App.switchTab('assignments')">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Prompt Vazifalari</span>
+        </button>
+        <button class="nav-link" data-tab="students" id="navStudents" onclick="App.switchTab('students')">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Guruh A'zolari</span>
+        </button>
+        <button class="nav-link" data-tab="reports" id="navReports" onclick="App.switchTab('reports')">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>AI Hisobotlari</span>
+          <span class="badge-count" id="badgeReportCount">Jonli</span>
+        </button>
+        <button class="nav-link" data-tab="settings" id="navSettings" onclick="App.switchTab('settings')">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="1" x2="7" y1="14" y2="14"/><line x1="9" x2="15" y1="8" y2="8"/><line x1="17" x2="23" y1="16" y2="16"/></svg>
+          <span>Sozlamalar</span>
+        </button>
+      </nav>
+
+      <!-- Role Switcher, Quick Action Buttons & User Profile -->
+      <div class="header-actions">
+        <!-- Tepadagi tezkor qo'shish tugmalari -->
+        <div class="header-quick-btns">
+          <button class="btn btn-sm btn-primary" onclick="App.openModal('modalCreateHw')" title="Yangi prompt vazifasi qo'shish">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>+ Vazifa</span>
+          </button>
+          <button class="btn btn-sm btn-outline-white" style="color: var(--primary); border-color: rgba(99,102,241,0.35);" onclick="App.openModal('modalAddMember')" title="Guruhga yangi a'zo qo'shish">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            <span>+ A'zo</span>
+          </button>
+        </div>
+
+        <div class="role-switcher">
+          <span class="role-label">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Rol:
+          </span>
+          <select id="roleSwitcherSelect" class="role-select" title="Foydalanuvchi profilini tanlash"></select>
+        </div>
+
+        <div id="aiHeaderStatusBadge" class="ai-status-indicator" onclick="App.openModal('modalAiConnect')" title="Sun'iy intellekt holati">
+          <span class="ai-pulse-dot local-active"></span>
+          <span>AI: Mahalliy Tizim</span>
+        </div>
+
+        <div id="supabaseHeaderStatusBadge" class="supabase-status-indicator disconnected" onclick="App.openModal('modalSupabaseConnect')" title="Supabase Bulut Bazasi Holati">
+          <span class="ai-pulse-dot" style="background: #94a3b8;"></span>
+          <span>Supabase: Mahalliy</span>
+        </div>
+
+        <button id="themeToggleBtn" class="icon-btn" title="Yorug' / Qorong'i rejim"></button>
+
+        <div class="user-profile-btn" onclick="App.openModal('modalAddMember')" title="Profil yoki yangi a'zo qo'shish">
+          <div class="user-avatar" id="userAvatarDisplay">UA</div>
+          <div class="user-info">
+            <span class="user-name" id="userNameDisplay">Ustoz (Admin)</span>
+            <span class="user-role-text" id="userRoleDisplay">AI Asoslari Ustozi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO BANNER SHOWCASE
+       ========================================================================== -->
+  <section class="hero-banner">
+    <div class="hero-card">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>AI Asoslari va Prompt Muhandisligi Guruhlari</span>
+        </div>
+        <h2 class="hero-title">
+          O'quvchilarning AI ko'rsatmalarini <span>nazorat qilish va tekshirish</span>
+        </h2>
+        <p class="hero-desc">
+          O'quvchilar guruhlarda sun'iy intellektga to'g'ri vazifa topshirishni (prompt engineering asoslarini) o'rganishadi.
+          Har bir vazifa alohida mavzuga bag'ishlangan. O'quvchi yozgan promptni AI bir zumda tahlil qiladi va ustoz uchun tushunarli hisobot tayyorlab beradi.
+        </p>
+
+        <div class="hero-actions">
+          <button id="btnOpenCreateHw" class="btn btn-primary" onclick="App.openModal('modalCreateHw')">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>Yangi Vazifa Qo'shish</span>
+          </button>
+          <button class="btn btn-outline-white" onclick="App.openModal('modalAddMember')">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Yangi A'zo Qo'shish</span>
+          </button>
+          <button class="btn btn-outline-white" onclick="App.switchTab('reports')">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+            <span>AI Tahliliy Hisobotlari</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img src="assets/hero.jpg" alt="ZiyoNazorat AI Prompt Engineering Platform">
+        <div class="floating-ai-badge">
+          <div class="ai-pulse-dot"></div>
+          <div>
+            <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-cyan); font-weight: 700; letter-spacing: 0.05em;">AI Prompt Tekshiruvchi</div>
+            <div style="font-size: 0.86rem; font-weight: 700;">Haqiqiy Ma'lumotlar Nazorati</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       REAL-TIME METRICS & STATS (SOXTA SONLARSIZ)
+       ========================================================================== -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon indigo">
+        <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value" id="statTotalHw">5</div>
+        <div class="stat-label">Prompt Vazifalari</div>
+        <span class="stat-trend trend-up">5 ta amaliy mavzu</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon cyan">
+        <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value" id="statTotalStudents">0</div>
+        <div class="stat-label">Ro'yxatdan O'tganlar</div>
+        <span class="stat-trend" style="color: var(--text-muted);">Haqiqiy o'quvchilar</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon rose">
+        <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value" id="statCheckedAi">0</div>
+        <div class="stat-label">Topshirilgan Promptlar</div>
+        <span class="stat-trend" style="color: var(--text-muted);">AI tekshirgan ishlar</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon amber">
+        <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value" id="statAvgScore">—</div>
+        <div class="stat-label">O'rtacha Natija</div>
+        <span class="stat-trend" style="color: var(--text-muted);">Hali baholanmagan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MAIN VIEWS WRAPPER
+       ========================================================================== -->
+  <main class="content-wrapper">
+
+    <!-- VIEW 1: UY VAZIFALARI (HAR BIR VAZIFA ALOHIDA) -->
+    <section id="view-assignments" class="view-section active">
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>
+            <svg class="svg-icon text-cyan" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Alohida Prompt Vazifalari Katalogi
+          </h2>
+          <p class="section-subtitle">Har bir topshiriq alohida prompt texnikasi, aniq mezonlar va AI tekshiruv shartlariga ega.</p>
+        </div>
+
+        <div class="section-toolbar">
+          <div class="search-input-box">
+            <span class="search-icon">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+            </span>
+            <input type="text" id="searchHwInput" placeholder="Vazifa nomi yoki mavzuni qidirish...">
+          </div>
+
+          <select id="subjectFilterSelect" class="filter-select">
+            <option value="all">Barcha AI Mavzulari</option>
+            <option value="rol va kontekst">Rol va Kontekst berish</option>
+            <option value="misollar bilan">Misollar bilan o'rgatish (Few-Shot)</option>
+            <option value="qadamma-qadam">Qadamma-qadam tahlil (Chain-of-Thought)</option>
+            <option value="format va cheklovlar">Format va Cheklovlar qo'yish</option>
+            <option value="xatoliklarni">Xatoliklarni kamaytirish</option>
+          </select>
+
+          <button class="btn btn-sm btn-primary" onclick="App.openModal('modalCreateHw')">
+            <svg class="svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>+ Yangi Vazifa Qo'shish</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="assignments-grid" id="assignmentsGrid">
+        <!-- JS orqali to'ldiriladi -->
+      </div>
+    </section>
+
+    <!-- VIEW 2: GURUHLAR NAZORATI -->
+    <section id="view-students" class="view-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>
+            <svg class="svg-icon text-cyan" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            AI Guruhlar Nazorati va O'quvchilar Davomati
+          </h2>
+          <p class="section-subtitle">Guruhdagi a'zolarning topshirgan promptlari, qarzdorliklari va o'rtacha natijalari.</p>
+        </div>
+
+        <div class="section-toolbar">
+          <div class="search-input-box">
+            <span class="search-icon">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+            </span>
+            <input type="text" id="searchMemberInput" placeholder="A'zo ismi, pochtasi yoki guruhi...">
+          </div>
+
+          <select id="groupFilterSelect" class="filter-select">
+            <option value="all">Barcha Guruhlar</option>
+          </select>
+
+          <button class="btn btn-sm btn-outline-white" style="color: var(--primary); border-color: rgba(99,102,241,0.35);" onclick="App.openModal('modalCreateGroup')">
+            <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>+ Guruh Ochish</span>
+          </button>
+
+          <button class="btn btn-sm btn-primary" onclick="App.openModal('modalAddMember')">
+            <svg class="svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            <span>+ Yangi A'zo Qo'shish</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Faol AI Guruhlari Boshqaruvi -->
+      <div style="margin-bottom: 0.9rem; display: flex; align-items: center; justify-content: space-between;">
+        <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Mavjud AI O'quv Guruhlari
+        </h3>
+        <button class="btn btn-sm btn-outline-white" style="color: var(--primary);" onclick="App.openModal('modalCreateGroup')">
+          <svg class="svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+          <span>Yangi Guruh Yaratish</span>
+        </button>
+      </div>
+
+      <div id="groupCardsContainer" class="group-cards-grid">
+        <!-- JS orqali to'ldiriladi -->
+      </div>
+
+      <div class="submissions-table-card">
+        <div class="table-header-box">
+          <h3 style="font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="svg-icon text-cyan" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            AI Guruhlari A'zolari va O'quvchilari Ro'yxati
+          </h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Haqiqiy monitoring</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>A'zo & Bog'lanish</th>
+                <th>Guruh</th>
+                <th>Rol</th>
+                <th>Topshirgan Promptlari</th>
+                <th>Kutilayotgan Vazifalar</th>
+                <th>O'rtacha Ball</th>
+                <th style="text-align: right;">Harakat</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              <!-- JS orqali to'ldiriladi -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: AI HISOBOTLAR PANELI & TEKSHIRUV MARKAZI -->
+    <section id="view-reports" class="view-section">
+      <div id="aiReportsContent">
+        <!-- JS orqali to'ldiriladi -->
+      </div>
+    </section>
+
+    <!-- VIEW 4: SOZLAMALAR VA GEMINI API KALITI -->
+    <section id="view-settings" class="view-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>
+            <svg class="svg-icon text-cyan" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="1" x2="7" y1="14" y2="14"/><line x1="9" x2="15" y1="8" y2="8"/><line x1="17" x2="23" y1="16" y2="16"/></svg>
+            Tizim Sozlamalari va Sun'iy Intellekt
+          </h2>
+          <p class="section-subtitle">AI modeli parametrlari va platforma ma'lumotlari.</p>
+        </div>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            OpenAI (ChatGPT) va Google Gemini API Sozlamasi
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5;">
+            Platforma <strong>OpenAI (GPT-4o)</strong> va <strong>Google Gemini</strong> bilan to'liq integratsiya qilingan.
+            O'quvchilar yozgan promptlarni sun'iy intellekt orqali tekshirtirish va ovozli topshiriqlarni tahlil qilish uchun API kalitingizni kiriting.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">OpenAI yoki Gemini API Kaliti:</label>
+            <input type="password" id="settingsApiKeyInput" class="form-control" placeholder="sk-proj-... yoki AIzaSy...">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; display: block;">
+              Kalitingiz brauzeringiz xotirasida (localStorage) xavfsiz saqlanadi.
+            </span>
+          </div>
+
+          <button class="btn btn-primary" onclick="App.saveSettings()">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Kalitni Saqlash</span>
+          </button>
+        </div>
+
+        <div class="analytics-card">
+          <h3 style="margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg class="svg-icon" style="color: #10b981;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.968 2.054c.484-.52 1.343-.2 1.38.513l.417 8.163h8.337c.725 0 1.144.821.71 1.402l-10.78 14.47c-.484.52-1.343.2-1.38-.513l-.417-8.163H2.898c-.725 0-1.144-.821-.71-1.402l10.78-14.47z"/>
+              </svg>
+              Supabase Bulut Bazasi (PostgreSQL)
+            </span>
+            <span id="supabaseSettingsStatus"></span>
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5;">
+            Platformani <strong>Supabase</strong> bulut bazasiga ulab, barcha vazifalar, o'quvchilar va topshiriqlarni real vaqt rejimida saqlang va boshqa qurilmalar bilan sinxronlang.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Supabase Project URL:</label>
+            <input type="text" id="settingsSupabaseUrlInput" class="form-control" placeholder="https://xyzproject.supabase.co">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Supabase Anon (Public) Key:</label>
+            <input type="password" id="settingsSupabaseKeyInput" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; display: block;" id="supabaseLastSyncDisplay">
+              Hali sinxronlanmagan
+            </span>
+          </div>
+
+          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem;">
+            <button class="btn btn-primary" onclick="App.saveSupabaseSettings()">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span>Ulanish va Saqlash</span>
+            </button>
+            <button class="btn btn-outline-white" style="color: var(--text-main);" onclick="App.syncFromSupabase()" title="Bulutdan so'nggi ma'lumotlarni yuklab olish">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 21v-9"/><path d="m8 17 4 4 4-4"/></svg>
+              <span>Bulutdan Yuklash</span>
+            </button>
+            <button class="btn btn-outline-white" style="color: var(--text-main);" onclick="App.syncToSupabase()" title="Hozirgi barcha ma'lumotlarni Supabasega yuklash">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+              <span>Bulutga Yuklash</span>
+            </button>
+            <button class="btn btn-outline-white" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4);" onclick="App.openModal('modalSupabaseSql')">
+              <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>SQL Sxemani Ko'rish</span>
+            </button>
+            <button class="btn btn-outline-white" style="color: var(--accent-rose); border-color: rgba(244,63,94,0.3);" onclick="App.disconnectSupabase()">
+              <span>Uzish</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="svg-icon text-rose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            Ma'lumotlar Bazasini Tozalash
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5;">
+            Agar kiritilgan barcha topshiriqlarni tozalab, tizimni toza boshlang'ich holatga qaytarmoqchi bo'lsangiz:
+          </p>
+
+          <button class="btn btn-outline-white" style="color: var(--accent-rose); border-color: rgba(244,63,94,0.3);" onclick="App.resetDemoData()">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            <span>Toza Boshlang'ich Holatga Qaytarish</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: YANGI PROMPT VAZIFASI YARATISH (USTOZ UCHUN)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalCreateHw">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Yangi Alohida Prompt Vazifasi Yaratish</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <form id="formCreateHw">
+        <div class="modal-body">
+          <!-- Ovozli xabar orqali AI bilan to'ldirish -->
+          <div class="voice-hw-creator">
+            <div class="voice-hw-header">
+              <div class="voice-hw-icon-pulse">
+                <svg class="svg-icon text-cyan" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+              </div>
+              <div>
+                <h4 style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.15rem; font-weight: 700;">
+                  Ovozli Xabar Orqali Vazifa Qo'shish (AI Avtomatik To'ldiradi)
+                </h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                  Topshiriqni mikrofonga erkin gapirib bering. Sun'iy intellekt xabaringizni tushunib, sarlavha, mezonlar, muddat va barcha bo'limlarni o'zi to'ldirib beradi.
+                </p>
+              </div>
+            </div>
+
+            <div class="voice-record-controls">
+              <button type="button" id="btnToggleVoiceRecord" class="btn btn-primary btn-record" onclick="App.toggleVoiceRecording()">
+                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                <span id="voiceRecordBtnText">Ovozli Xabar Yozish</span>
+              </button>
+
+              <button type="button" class="btn btn-outline-white" style="color: var(--primary); border-color: rgba(99,102,241,0.3);" onclick="App.insertSampleVoiceText()">
+                <svg class="svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                <span>Namunaviy Audio Bilan Sinash</span>
+              </button>
+            </div>
+
+            <div id="voiceRecordingStatus" class="voice-status-bar" style="display: none;">
+              <div class="audio-wave">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span id="voiceStatusText">Ovoz yozilmoqda... Topshiriq shartlarini gapiring...</span>
+              <span id="voiceTimer" class="voice-timer">00:00</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 0.8rem; margin-bottom: 0.6rem;">
+              <label class="form-label" style="font-size: 0.78rem; text-transform: uppercase; color: var(--accent-cyan); font-weight: 700;">
+                Ovozli xabar matni (Transkripsiya):
+              </label>
+              <textarea id="voiceTranscriptInput" class="form-control" style="min-height: 65px; font-size: 0.86rem;" placeholder="Ovozli xabaringiz transkripsiyasi bu yerda ko'rinadi (yoki qo'lda yozib ham AI ga to'ldirtirishingiz mumkin)..."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button type="button" id="btnParseVoiceWithAI" class="btn btn-grad-purple" onclick="App.parseVoiceWithAI()">
+                <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                <span>AI Bo'limlarni To'ldirsin</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">AI Mavzusi / Yo'nalish <span class="req">*</span></label>
+              <select id="newHwSubject" class="form-control" required>
+                <option value="Rol va Kontekst">Rol va Kontekst berish (Persona)</option>
+                <option value="Misollar bilan o'rgatish">Misollar bilan o'rgatish (Few-Shot)</option>
+                <option value="Qadamma-qadam fikrlash">Qadamma-qadam fikrlash (Chain-of-Thought)</option>
+                <option value="Format va Cheklovlar">Format va Cheklovlar qo'yish</option>
+                <option value="Xatoliklarni kamaytirish">Xatoliklarni kamaytirish</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Qaysi Guruh Uchun</label>
+              <select id="newHwTargetGroup" class="form-control">
+                <option value="Barcha guruhlar" selected>Barcha guruhlar</option>
+                <option value="1-Guruh: AI Asoslari">1-Guruh: AI Asoslari</option>
+                <option value="2-Guruh: Amaliy Promptlar">2-Guruh: Amaliy Promptlar</option>
+                <option value="3-Guruh: Biznesda AI">3-Guruh: Biznesda AI</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Qiyinlik darajasi</label>
+              <select id="newHwDifficulty" class="form-control">
+                <option value="Boshlang'ich" selected>Boshlang'ich</option>
+                <option value="O'rta">O'rta</option>
+                <option value="Ilg'or">Ilg'or</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Vazifa mavzusi (Sarlavha) <span class="req">*</span></label>
+            <input type="text" id="newHwTitle" class="form-control" placeholder="Masalan: AI yordamida biznes rejani jadval ko'rinishida tuzish prompti" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Topshiriq sharti va nima qilish kerakligi <span class="req">*</span></label>
+            <textarea id="newHwDescription" class="form-control" placeholder="1. Qanday rol berish kerak...&#10;2. Qanday kontekst va cheklovlar bo'lishi shart...&#10;O'quvchi qanday prompt yozishi kerakligini tushunarli qilib yozing." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Topshirish oxirgi muddati (Deadline) <span class="req">*</span></label>
+              <input type="date" id="newHwDeadline" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Maksimal ball</label>
+              <input type="number" id="newHwMaxScore" class="form-control" value="100" min="10" max="100">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">AI Baholash Mezonlari</label>
+            <input type="text" id="newHwCriteria" class="form-control" placeholder="Masalan: Rol va kontekst (35%), Ko'rsatma aniqligi (35%), Format (30%)" value="Rol va kontekst (35%), Ko'rsatma aniqligi (35%), Format (30%)">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ustozning Namunaviy Prompti (AI solishtirishi uchun namunaviy yechim)</label>
+            <textarea id="newHwSolution" class="form-control" placeholder="To'g'ri va namunali prompt matni..."></textarea>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Ushbu namunaviy prompt o'quvchilarga ko'rinmaydi, faqat AI tahlilida mezon sifatida qo'llaniladi.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span>Vazifani E'lon Qilish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: PROMPT TOPSHIRISH (O'QUVCHI UCHUN)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalSubmitHw">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>Promptni Topshirish va AI Tekshiruviga Yuborish</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <form id="formSubmitHomework">
+        <div class="modal-body">
+          <div style="background: rgba(99,102,241,0.06); border: 1px solid rgba(99,102,241,0.25); border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.3rem;">
+            <h4 id="submitModalHwTitle" style="color: var(--primary); font-size: 1.1rem; margin-bottom: 0.4rem;">Mavzu</h4>
+            <p id="submitModalHwDesc" style="font-size: 0.88rem; color: var(--text-main); white-space: pre-line;">Topshiriq sharti...</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Siz yozgan Prompt (Ko'rsatma matni) <span class="req">*</span></label>
+            <textarea id="submitAnswerText" class="form-control" style="min-height: 180px;" placeholder="AI ga qaratilgan to'liq ko'rsatmani yozing:&#10;'Sen tajribali mutaxassisisan... Kontekst:... Vazifa:...'" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Fayl yoki Skrinshot biriktirish (ixtiyoriy)</label>
+            <input type="file" id="mockFileInput" style="display: none;" accept=".txt,.pdf,.png,.jpg,.jpeg">
+            <div class="file-dropzone" id="fileDropzone">
+              <div class="dropzone-icon">
+                <svg class="svg-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" x2="12" y1="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/><polyline points="16 16 12 12 8 16"/></svg>
+              </div>
+              <p style="font-size: 0.92rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.2rem;">
+                Matnli fayl yoki AI bergan javob rasmini yuklash uchun bosing
+              </p>
+              <p style="font-size: 0.78rem; color: var(--text-muted);">TXT, PDF, PNG yoki JPG formatlari qo'llab-quvvatlanadi</p>
+              <div id="attachedFileNameDisplay" style="margin-top: 0.6rem; font-weight: 700; color: var(--primary);"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Qo'shimcha havola (ixtiyoriy)</label>
+            <input type="url" id="submitExternalLink" class="form-control" placeholder="ChatGPT / Claude suhbat havolasi yoki Google Doc...">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Bekor qilish</button>
+          <button type="submit" id="btnSubmitWithAI" class="btn btn-primary">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span>Promptni Topshirish va AI ga Yuborish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: AI TAHLILI VA USTOZ HISOBOTI MODALI
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAiReport">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>Sun'iy Intellekt Tahlili va Ustoz Uchun Hisobot</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <div class="modal-body" id="aiReportModalBody"></div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-white" style="color: var(--primary);" onclick="window.print()">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span>PDF Chop Etish</span>
+        </button>
+        <button type="button" class="btn btn-primary close-modal-trigger">
+          <span>Yopish</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: VAZIFA BATAFSIL SHARTI MODALI
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAssignmentDetails">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Prompt Vazifasi Tafsilotlari</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+      <div class="modal-body" id="assignmentDetailsBody"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 5: O'QUVCHI PROFILI TAHLILI MODALI
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalStudentProfile">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+          <span>O'quvchining Prompt Natijalari va Faoliyati</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+      <div class="modal-body" id="studentProfileBody"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 6: GURUHGA YANGI A'ZO QO'SHISH (O'QUVCHI / YORDAMCHI USTOZ)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAddMember">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>AI Guruhiga Yangi A'zo Qo'shish</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <form id="formAddMember">
+        <div class="modal-body">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+            O'quvchini yoki yordamchi ustozni AI o'quv guruhiga biriktiring.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Ism va Familiya <span class="req">*</span></label>
+            <input type="text" id="newMemberName" class="form-control" placeholder="Masalan: Jamshid Yo'ldoshev" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">A'zolik Roli <span class="req">*</span></label>
+              <select id="newMemberRole" class="form-control">
+                <option value="student" selected>O'quvchi</option>
+                <option value="assistant">Yordamchi Ustoz / Tyutor</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">O'quv Guruhi <span class="req">*</span></label>
+              <select id="newMemberGroup" class="form-control">
+                <option value="1-Guruh: AI Asoslari">1-Guruh: AI Asoslari</option>
+                <option value="2-Guruh: Amaliy Promptlar">2-Guruh: Amaliy Promptlar</option>
+                <option value="3-Guruh: Biznesda AI">3-Guruh: Biznesda AI</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Telefon raqami</label>
+              <input type="tel" id="newMemberPhone" class="form-control" placeholder="+998 90 123 45 67">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Elektron pochta / Login</label>
+              <input type="email" id="newMemberEmail" class="form-control" placeholder="jamshid@ziyonazorat.uz">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            <span>A'zoni Guruhga Qo'shish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 7: YANGI AI GURUHI YARATISH (USTOZ ISTALGANCHA GURUH OCHADI)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalCreateGroup">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+          <span>Yangi AI O'quv Guruhi Yaratish</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <form id="formCreateGroup">
+        <div class="modal-body">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+            O'zingiz istagan nomda yangi AI guruhi oching va har bir guruhga xohlagancha o'quvchi qo'shing.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Guruh Nomi <span class="req">*</span></label>
+            <input type="text" id="newGroupNameInput" class="form-control" placeholder="Masalan: 4-Guruh: ChatGPT va Claude Mutaxassislari" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Guruh Tavsifi / Yo'nalishi <span class="req">*</span></label>
+            <input type="text" id="newGroupDescInput" class="form-control" placeholder="Masalan: AI vositalari yordamida amaliy prompt muhandisligi kursi" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Dars Kunlari va Vaqti</label>
+            <input type="text" id="newGroupScheduleInput" class="form-control" placeholder="Masalan: Dushanba, Chorshanba, Juma (20:00)" value="Dush-Chor-Juma (20:00)">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">
+            <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>Guruhni Yaratish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 8: SUN'IY INTELLEKT (AI) ULASh VA GEMINI SOZLAMASI
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAiConnect">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>Sun'iy Intellekt (AI) Holati va Ulanishi</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: rgba(6,182,212,0.06); border: 1px solid rgba(6,182,212,0.25); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.2rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+            <strong style="color: var(--accent-cyan); display: flex; align-items: center; gap: 0.4rem;">
+              <span class="ai-pulse-dot" style="background: #10b981;"></span> Faol AI Mexanizmi:
+            </strong>
+            <span id="modalAiCurrentEngine" style="font-weight: 700; font-size: 0.88rem;">ZiyoNazorat AI + Google Gemini</span>
+          </div>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.45;">
+            O'quvchilar jo'natgan har bir amaliy promptni AI real vaqtda tekshiradi, xatoliklarni aniqlaydi va ustoz uchun tahliliy hisobot beradi.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">OpenAI (ChatGPT) yoki Gemini API Kaliti:</label>
+          <input type="password" id="modalApiKeyInput" class="form-control" placeholder="sk-proj-... yoki AIzaSy...">
+          <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; display: block;">
+            OpenAI (GPT-4o) yoki Google Gemini API kalitini kiritishingiz mumkin. Kalit kiritilmasa, platforma o'rnatilgan lokal aqlli tahlilchi orqali ishlayveradi.
+          </span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Yopish</button>
+        <button type="button" class="btn btn-primary" onclick="App.saveModalApiKey()">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Ulash va Saqlash</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 9: SUPABASE BULUT BAZASI ULASh VA SOZLASH
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalSupabaseConnect">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon" style="color: #10b981;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.968 2.054c.484-.52 1.343-.2 1.38.513l.417 8.163h8.337c.725 0 1.144.821.71 1.402l-10.78 14.47c-.484.52-1.343.2-1.38-.513l-.417-8.163H2.898c-.725 0-1.144-.821-.71-1.402l10.78-14.47z"/>
+          </svg>
+          <span>Supabase Bulut Bazasi (PostgreSQL)</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.25); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.2rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+            <strong style="color: #10b981; display: flex; align-items: center; gap: 0.4rem;">
+              <span class="ai-pulse-dot" style="background: #10b981;"></span> Bulutli Baza Imkoniyatlari:
+            </strong>
+          </div>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.45; margin: 0;">
+            Supabase ulanganda barcha yaratilgan guruhlar, o'quvchilar ro'yxati, prompt topshiriqlari va AI baholari to'g'ridan-to'g'ri bulutda saqlanadi va real vaqtda har qanday kompyuter yoki telefonda yangilanadi.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Supabase Project URL:</label>
+          <input type="text" id="modalSupabaseUrlInput" class="form-control" placeholder="https://abcdefghijklmno.supabase.co">
+          <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; display: block;">
+            Supabase boshqaruv panelidagi: <strong>Project Settings &rarr; API &rarr; Project URL</strong>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Supabase Anon (Public) Key:</label>
+          <input type="password" id="modalSupabaseKeyInput" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+          <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; display: block;">
+            Supabase boshqaruv panelidagi: <strong>Project Settings &rarr; API &rarr; Project API keys &rarr; anon public</strong>
+          </span>
+        </div>
+
+        <div style="background: var(--bg-surface-soft); border-radius: var(--radius-md); padding: 0.8rem; margin-top: 0.8rem; font-size: 0.82rem; color: var(--text-muted);">
+          <strong style="color: var(--text-main); display: block; margin-bottom: 0.3rem;">Tezkor 3 qadam:</strong>
+          1. <a href="https://supabase.com" target="_blank" style="color: var(--primary); text-decoration: underline;">supabase.com</a> saytida yangi bepul loyiha oching.<br>
+          2. <a href="javascript:void(0)" onclick="App.openModal('modalSupabaseSql')" style="color: #10b981; font-weight: 600;">SQL Sxemani oling</a> va Supabase SQL Editor bo'limida ishga tushiring.<br>
+          3. URL va Anon kalitni bu yerga kiritib, "Ulash va Saqlash" tugmasini bosing!
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Yopish</button>
+        <button type="button" class="btn btn-primary" onclick="App.saveModalSupabase()">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Ulash va Saqlash</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 10: SUPABASE SQL SXEMASI VA NUSXA OLISH
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalSupabaseSql">
+    <div class="modal-container" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3>
+          <svg class="svg-icon text-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Supabase SQL Sxemasi (Jadvallar va RLS)</span>
+        </h3>
+        <button class="close-btn close-modal-trigger">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.8rem;">
+          Ushbu SQL kodni Supabase boshqaruv panelidagi <strong>SQL Editor &rarr; New Query</strong> bo'limiga qo'ying va <strong>Run</strong> tugmasini bosing. Bu <code style="color: var(--primary);">groups</code>, <code style="color: var(--primary);">users</code>, <code style="color: var(--primary);">assignments</code> va <code style="color: var(--primary);">submissions</code> jadvallarini avtomatik yaratadi.
+        </p>
+
+        <div style="position: relative;">
+          <pre class="sql-code-box" id="supabaseSqlCodeBlock"><code>-- 1. GURUHLAR JADVALI
+CREATE TABLE IF NOT EXISTS public.groups (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT DEFAULT '',
+  schedule TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. FOYDALANUVCHILAR VA GURUH A'ZOLARI
+CREATE TABLE IF NOT EXISTS public.users (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'student',
+  title TEXT DEFAULT '',
+  email TEXT DEFAULT '',
+  phone TEXT DEFAULT '',
+  group_name TEXT DEFAULT '',
+  avatar TEXT DEFAULT '',
+  joined_at TEXT DEFAULT '',
+  subjects JSONB DEFAULT '[]'::jsonb,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. PROMPT VAZIFALARI
+CREATE TABLE IF NOT EXISTS public.assignments (
+  id TEXT PRIMARY KEY,
+  subject TEXT NOT NULL,
+  subject_badge_class TEXT DEFAULT 'badge-role',
+  target_group TEXT DEFAULT 'Barcha guruhlar',
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  deadline TEXT DEFAULT '',
+  deadline_display TEXT DEFAULT '',
+  max_score INT DEFAULT 100,
+  difficulty TEXT DEFAULT 'Boshlang''ich',
+  criteria TEXT DEFAULT '',
+  sample_solution TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. TOPSHIRILGAN PROMPTLAR VA AI TEKSHIRUVLARI
+CREATE TABLE IF NOT EXISTS public.submissions (
+  id TEXT PRIMARY KEY,
+  assignment_id TEXT NOT NULL,
+  student_id TEXT NOT NULL,
+  student_name TEXT NOT NULL,
+  student_avatar TEXT DEFAULT '',
+  student_group TEXT DEFAULT '',
+  submitted_at TEXT DEFAULT '',
+  answer_text TEXT NOT NULL,
+  attached_file TEXT DEFAULT NULL,
+  external_link TEXT DEFAULT NULL,
+  status TEXT DEFAULT 'graded',
+  ai_report JSONB DEFAULT '{}'::jsonb,
+  teacher_note TEXT DEFAULT '',
+  teacher_approved BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- XAVFSIZLIK: RLS va Ommaviy kirish ruxsati (Anon key uchun)
+ALTER TABLE public.groups ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.assignments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.submissions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public groups" ON public.groups FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public users" ON public.users FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public assignments" ON public.assignments FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public submissions" ON public.submissions FOR ALL USING (true) WITH CHECK (true);</code></pre>
+          <button type="button" class="sql-copy-float-btn" onclick="App.copySupabaseSql()">
+            <svg class="svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span id="copySqlBtnText">Nusxa olish</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-white close-modal-trigger" style="color: var(--text-main);">Yopish</button>
+        <button type="button" class="btn btn-primary" onclick="App.copySupabaseSql()">
+          <svg class="svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>SQL Kodni Nusxalash</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/ai-service.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
